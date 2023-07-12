@@ -60,7 +60,18 @@ export function Editor() {
             return currentLineText === '/'
           }}
         >
-          <button className="flex min-w-[280px] items-center gap-2 rounded p-1 hover:bg-zinc-600">
+          <button
+            className="flex min-w-[280px] items-center gap-2 rounded p-1 hover:bg-zinc-600"
+            onClick={() => {
+              const { $from } = editor.state.selection
+              const deleteRange = {
+                from: $from.pos - 1,
+                to: $from.pos,
+              }
+
+              editor.chain().focus().deleteRange(deleteRange).run()
+            }}
+          >
             <img
               src="https://www.notion.so/images/blocks/text/en-US.png"
               alt="Text"
@@ -100,6 +111,36 @@ export function Editor() {
               <span className="text-sm">Heading 1</span>
               <span className="text-xs text-zinc-400">
                 Big section heading.
+              </span>
+            </div>
+          </button>
+
+          <button
+            className="flex min-w-[280px] items-center gap-2 rounded p-1 hover:bg-zinc-600"
+            onClick={() => {
+              const { $from } = editor.state.selection
+              const deleteRange = {
+                from: $from.pos - 1,
+                to: $from.pos,
+              }
+
+              editor
+                .chain()
+                .focus()
+                .deleteRange(deleteRange)
+                .toggleCodeBlock()
+                .run()
+            }}
+          >
+            <img
+              src="https://www.notion.so/images/blocks/code.a8b201f4.png"
+              alt="Code"
+              className="w-12 rounded border border-zinc-600"
+            />
+            <div className="flex flex-col text-left">
+              <span className="text-sm">Code</span>
+              <span className="text-xs text-zinc-400">
+                Capture a code snippet.
               </span>
             </div>
           </button>
